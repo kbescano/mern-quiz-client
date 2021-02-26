@@ -1,0 +1,237 @@
+
+.container {
+    display: flex;
+    justify-content: center;
+    margin: 3rem auto;
+    margin-bottom: 0;
+    min-height: 60vh;
+    width: 100%;
+    position: relative;
+    visibility: hidden;
+
+    
+
+    h1 {
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+   
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    height: 10vh;
+    background-color: $color-white;
+    z-index: 1000;
+    width: 100%; 
+    padding: 0 3rem;
+
+    p {
+        color: $color-black;
+
+        span {
+            color: $color-blue;
+        }
+    }
+    
+}
+
+.quiz__left {
+    display: flex;
+
+    @include md {
+        display: none;
+    }
+}
+
+
+
+
+.img {
+    display: none; 
+
+    @include md {
+
+        display: flex;
+        position: fixed;
+        bottom: 3%;
+        right: 10%;
+        width: 6rem;
+        filter: drop-shadow(-12px 5px 7px rgba(0,0,0,.5));
+        animation: dml 5s infinite alternate-reverse;
+        z-index: 1000;
+        pointer-events: none;
+
+        @keyframes dml {
+            from {
+                transform: translateY(0px) rotate(10deg);
+            }
+            to {
+                transform: translateY(5px) rotate(-10deg);
+            }
+        }
+
+    }
+
+}
+
+.seconds{
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10000;
+
+}
+
+
+
+.quiz {
+    display: flex;
+    height: 50rem;
+    width: 60%;
+    gap: 2rem;
+    padding: 2rem;
+
+    @include xl {
+        height: 60rem;
+        width: 70%;
+        
+    }
+
+    @include lg{
+        width: calc(100% + -1em);
+        height: 70rem;
+        gap: 3rem;
+        padding: 3rem;
+    }
+
+    @include md {
+        width: calc(100% + -10em);
+        height: 60rem;
+        padding: 5rem;
+    }
+
+    @include sm {
+        width: 100%;
+        padding: 3rem 0;
+        border-radius: 0;
+    }
+
+    @include xs {
+        width: 100%;
+    }
+
+    > * {
+        flex-basis: 100%;
+    }
+
+    img {
+        width: 30rem;
+        outline: 5px solid $color-white;
+        outline-offset: -.8em;
+
+        @include md {
+            display: none;
+        }
+    }
+
+    &__board {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        gap: .1em;
+        top: 0;
+        left: 2%;
+
+        img {
+            width: 8rem;
+            position: relative;
+            transform: rotate(-14.5deg);
+        }
+
+        &--progress {
+            font-weight: 800;
+            position: absolute;
+            top: 60%;
+            left: 30%;
+            
+        }
+
+        &--score {
+            font-weight: 800;
+            position: absolute;
+            top: 45%;
+            left: 30%;
+        }
+    }
+
+    form {
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        padding: 2rem;
+        position: relative;
+
+        @include sm {
+            height: 80%;
+        }
+
+        @include xs {
+            height: 80%;
+            padding: 2rem 0;
+        }
+        .quiz__questions {
+            color: #0C7489;
+            width: 100%;
+            padding: 2rem;
+            line-height: 2.5em;
+            font-size: 1.2rem;
+        }
+
+        .quiz__answers {
+            display: flex;
+            flex-direction: column;
+            padding: 2rem 2rem 0rem 2rem;
+            gap: 1rem;
+
+            &--list { 
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                padding: 1.5em 1em;
+                background: radial-gradient( $color-blue, $color-dark-blue);
+                font-size: 1.5rem;
+                outline: none;
+                color: #fff;
+                cursor: pointer;
+                position: relative;
+                border-radius: .5rem;
+
+            }
+
+        }
+
+        button {
+            padding: 1em 0;
+            margin: 0 2rem;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            background-color: $color-blue;
+            color: white;
+            letter-spacing: .1em;
+            font-size: 1.5rem;
+        }
+    }
+}
