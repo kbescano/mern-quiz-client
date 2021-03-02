@@ -107,7 +107,7 @@ const Quiz = ({history}) => {
         }
 
         if (nextQuestion === quiz.length) {
-            dispatch(addScore(score + 10))
+            dispatch(addScore(score))
             history.push('/end')
         }
         setNumber(number + 1)
