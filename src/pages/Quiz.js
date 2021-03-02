@@ -89,7 +89,6 @@ const Quiz = ({history}) => {
         setOptionChosen(option);
         if (answer[currentQuestion] == option) {
             setScore(score + 10);
-            setNumber(number + 1)
             toast('Correct', {
                 autoClose: 2000,
                 position: "top-center",
@@ -111,6 +110,7 @@ const Quiz = ({history}) => {
             dispatch(addScore(score + 10))
             history.push('/end')
         }
+        setNumber(number + 1)
         setSeconds(60)
     };
 
