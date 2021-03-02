@@ -7,6 +7,7 @@ import {TweenLite, Power3} from 'gsap'
 import { gsap } from 'gsap'
 import { CSSPlugin } from 'gsap/CSSPlugin'
 import ProgressBar from "@ramonak/react-progress-bar";
+import { random } from 'gsap/gsap-core'
 
 
 const Quiz = ({history}) => {
@@ -24,15 +25,14 @@ const Quiz = ({history}) => {
     const [seconds, setSeconds] = useState(60);
     const [isRunning, setIsRunning] = useState(false);
     const [optionChosen, setOptionChosen] = useState("");
-             
-    const nextQuestion = currentQuestion + 1;
+    const [number, setNumber] = useState(0)
 
     const dispatch = useDispatch()
 
     const quizList = useSelector(state => state.quizList)
 
-    const { loading, quiz } = quizList
-
+    const { loading, quiz } = quizList 
+    
     const question = quiz.map(item => item.question)
     const answer1 = quiz.map(item => item.option1)
     const answer2 = quiz.map(item => item.option2)
@@ -40,9 +40,19 @@ const Quiz = ({history}) => {
     const answer4 = quiz.map(item => item.option4)
     const answer =  quiz.map(item => item.answer)
 
-    const progress =  Math.round((currentQuestion / quiz.length) * 100)
+    const progress =  Math.round((number / quiz.length) * 100)
+
+    const nextQuestion = currentQuestion + 1;
+
+    const randomRender = () => {
+        const random = Math.floor(Math.random() * 3)
+
+        console.log(random)
+    }
 
     useEffect(() => {
+
+        randomRender()
         
         const fetchData = async () => {
             const data = await dispatch(quizlist());
@@ -54,12 +64,11 @@ const Quiz = ({history}) => {
             const id = window.setInterval(() => {
               setSeconds(seconds => seconds - 1);
             }, 1000);
-  
             return () => window.clearInterval(id);
           }    
           return undefined   
         
-    }, [isRunning, dispatch]);
+    }, [isRunning, dispatch, random]);
 
     useEffect(() => {
         if(!loading){
@@ -72,7 +81,6 @@ const Quiz = ({history}) => {
         
     }, [ score, loading])
 
-
     if (seconds === 0) {
         setCurrentQuestion(nextQuestion)
         setSeconds(60)
@@ -82,6 +90,7 @@ const Quiz = ({history}) => {
         setOptionChosen(option);
         if (answer[currentQuestion] == option) {
             setScore(score + 10);
+            setNumber(number + 1)
             toast('Correct', {
                 autoClose: 2000,
                 position: "top-center",
@@ -94,18 +103,17 @@ const Quiz = ({history}) => {
         }
         if (nextQuestion < quiz.length) {
             setCurrentQuestion(nextQuestion);
+            randomRender()
         } else {
             setShowScore(true)
         }
 
-        if (nextQuestion === quiz.length) {
+        if (number === quiz.length) {
             dispatch(addScore(score + 10))
             history.push('/end')
         }
         setSeconds(60)
     };
-
-  
 
     return (
         <>  
@@ -124,7 +132,6 @@ const Quiz = ({history}) => {
         {loading ? <Loader /> : (
                 <>
                 
-                
             <div className='container' ref={el => con = el}>
             <img className='img' src='/images/dml.png' alt="logo" />
                 {isRunning && 
@@ -140,18 +147,69 @@ const Quiz = ({history}) => {
                     <form >
                         <div className='quiz__questions' ref={el => a = el}><h2>{question[currentQuestion]}</h2></div>
                         <div className='quiz__answers' ref={el => b = el}>
-                            <div className='quiz__answers--list' 
-                            onClick={() => chooseOption("option1") }>
-                                {answer1[currentQuestion]}</div>
-                            <div className='quiz__answers--list' 
-                            onClick={() => chooseOption("option2")}>
-                                {answer2[currentQuestion]}</div>
-                            <div className='quiz__answers--list' 
-                            onClick={() => chooseOption("option3")}>
-                                {answer3[currentQuestion]}</div>
-                            <div className='quiz__answers--list' 
-                            onClick={() => chooseOption("option4")}>
-                                {answer4[currentQuestion]}</div>
+                            {random === 0 ? (
+                                <>
+                                <div className='quiz__answers--list' 
+                                onClick={() => chooseOption("option4")}>
+                                    {answer4[currentQuestion]}</div>
+                                <div className='quiz__answers--list' 
+                                onClick={() => chooseOption("option1") }>
+                                    {answer1[currentQuestion]}</div>
+                                <div className='quiz__answers--list' 
+                                onClick={() => chooseOption("option2")}>
+                                    {answer2[currentQuestion]}</div>
+                                  <div className='quiz__answers--list' 
+                                  onClick={() => chooseOption("option3")}>
+                                      {answer3[currentQuestion]}</div>
+                                </>
+                            ) : random === 1 ? (
+                                <>
+                                <div className='quiz__answers--list' 
+                                onClick={() => chooseOption("option1") }>
+                                    {answer1[currentQuestion]}</div>
+                                <div className='quiz__answers--list' 
+                                onClick={() => chooseOption("option2")}>
+                                    {answer2[currentQuestion]}</div>
+                                <div className='quiz__answers--list' 
+                                onClick={() => chooseOption("option3")}>
+                                    {answer3[currentQuestion]}</div>
+                                <div className='quiz__answers--list' 
+                                onClick={() => chooseOption("option4")}>
+                                    {answer4[currentQuestion]}</div>
+                                </>
+                            ) : random === 2 ? (
+                                <>
+                                <div className='quiz__answers--list' 
+                                onClick={() => chooseOption("option4")}>
+                                    {answer4[currentQuestion]}</div>
+                                <div className='quiz__answers--list' 
+                                onClick={() => chooseOption("option3")}>
+                                    {answer3[currentQuestion]}</div>
+                                    <div className='quiz__answers--list' 
+                                onClick={() => chooseOption("option2")}>
+                                    {answer2[currentQuestion]}</div>
+                                <div className='quiz__answers--list' 
+                                onClick={() => chooseOption("option1") }>
+                                    {answer1[currentQuestion]}</div>
+
+                                </>
+                            ): (
+                                <>
+                                 <div className='quiz__answers--list' 
+                                onClick={() => chooseOption("option3")}>
+                                    {answer3[currentQuestion]}</div>
+                                <div className='quiz__answers--list' 
+                                onClick={() => chooseOption("option4")}>
+                                    {answer4[currentQuestion]}</div>
+                                <div className='quiz__answers--list' 
+                                onClick={() => chooseOption("option1") }>
+                                    {answer1[currentQuestion]}</div>
+                                <div className='quiz__answers--list' 
+                                onClick={() => chooseOption("option2")}>
+                                    {answer2[currentQuestion]}</div>
+                                </>
+                            )}   
+                            
                         </div>
                         
                     </form>

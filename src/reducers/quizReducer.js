@@ -4,10 +4,11 @@ import { QUIZ_LIST_FAIL, QUIZ_LIST_REQUEST, QUIZ_LIST_SUCCESS, QUIZ_CREATE_REQUE
 export const quizListReducer = (state = { quiz: [] }, action) => {
     switch (action.type) {
         case  QUIZ_LIST_REQUEST:
-            return {
-                loading: true,
-                quiz: []
-            }
+           return {
+               loading: true,
+               quiz: []
+           }
+              
         case QUIZ_LIST_SUCCESS:
             return {
                 loading: false,
