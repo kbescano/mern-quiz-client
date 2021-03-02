@@ -52,7 +52,7 @@ const Quiz = ({history}) => {
     useEffect(() => {
 
         randomRender()
-        
+
         const fetchData = async () => {
             const data = await dispatch(quizlist());
             const timer = await setIsRunning(true);
@@ -65,7 +65,8 @@ const Quiz = ({history}) => {
             }, 1000);
             return () => window.clearInterval(id);
           }    
-          return undefined   
+          return undefined  
+        
         
     }, [isRunning, dispatch]);
 
@@ -78,7 +79,7 @@ const Quiz = ({history}) => {
             TweenLite.from(d, .8, {opacity: 0, x: 5, ease: Power3.easeOut}, .2)
         }
         
-    }, [ score, loading])
+    }, [score,loading])
 
     if (seconds === 0) {
         setCurrentQuestion(nextQuestion)
@@ -105,14 +106,17 @@ const Quiz = ({history}) => {
         } else {
             setShowScore(true)
         }
-
-        if (nextQuestion === quiz.length) {
-            dispatch(addScore(score))
-            history.push('/end')
-        }
         setNumber(number + 1)
         setSeconds(60)
     };
+
+
+    if (nextQuestion === quiz.length) {
+        dispatch(addScore(score))
+        history.push('/end')
+    }
+
+    console.log(score)
 
     return (
         <>  
