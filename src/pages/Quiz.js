@@ -100,23 +100,21 @@ const Quiz = ({history}) => {
                 position: "top-center",
             })
         }
-        if (nextQuestion < quiz.length) {
+        if (currentQuestion < quiz.length) {
             setCurrentQuestion(nextQuestion);
             randomRender()
         } else {
             setShowScore(true)
         }
+
         setNumber(number + 1)
         setSeconds(60)
     };
 
-
-    if (nextQuestion === quiz.length) {
+    if (quiz.length > 0 && currentQuestion === quiz.length) {
         dispatch(addScore(score))
         history.push('/end')
     }
-
-    console.log(score)
 
     return (
         <>  
