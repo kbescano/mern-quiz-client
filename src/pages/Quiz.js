@@ -7,7 +7,6 @@ import {TweenLite, Power3} from 'gsap'
 import { gsap } from 'gsap'
 import { CSSPlugin } from 'gsap/CSSPlugin'
 import ProgressBar from "@ramonak/react-progress-bar";
-import { random } from 'gsap/gsap-core'
 
 
 const Quiz = ({history}) => {
@@ -26,6 +25,7 @@ const Quiz = ({history}) => {
     const [isRunning, setIsRunning] = useState(false);
     const [optionChosen, setOptionChosen] = useState("");
     const [number, setNumber] = useState(0)
+    const [random, setRandom] = useState(0)
 
     const dispatch = useDispatch()
 
@@ -45,9 +45,8 @@ const Quiz = ({history}) => {
     const nextQuestion = currentQuestion + 1;
 
     const randomRender = () => {
-        const random = Math.floor(Math.random() * 3)
-
-        console.log(random)
+        const shuffle = Number(Math.floor(Math.random() * 3))
+        setRandom(shuffle)
     }
 
     useEffect(() => {
@@ -68,7 +67,7 @@ const Quiz = ({history}) => {
           }    
           return undefined   
         
-    }, [isRunning, dispatch, random]);
+    }, [isRunning, dispatch]);
 
     useEffect(() => {
         if(!loading){
@@ -108,7 +107,7 @@ const Quiz = ({history}) => {
             setShowScore(true)
         }
 
-        if (number === quiz.length) {
+        if (nextQuestion === quiz.length) {
             dispatch(addScore(score + 10))
             history.push('/end')
         }
