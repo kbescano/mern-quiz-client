@@ -14,7 +14,6 @@ const Quiz = ({history}) => {
     let con = useRef(null)
     let a = useRef(null)
     let b = useRef(null)
-    let c = useRef(null)
     let d = useRef(null)
     gsap.registerPlugin(CSSPlugin)
 
@@ -73,7 +72,7 @@ const Quiz = ({history}) => {
     useEffect(() => {
         if(!loading){
             TweenLite.to(con, 0, {css: {visibility: "visible"}})
-            TweenLite.staggerFrom([a,b,c], .8, {opacity: 0,y: 10, ease: Power3.easeInOut}, .2)
+            TweenLite.staggerFrom([a,b], .8, {opacity: 0,y: 10, ease: Power3.easeInOut}, .2)
         }
         if(score) {
             TweenLite.from(d, .8, {opacity: 0, x: 5, ease: Power3.easeOut}, .2)
@@ -142,7 +141,7 @@ const Quiz = ({history}) => {
                 <h1>{seconds}</h1></div> </>}  
                 
                 <div className='quiz'>
-                    <div className='quiz__left'ref={el => c = el}>
+                    <div className='quiz__left'>
                     <img src='/images/templarcross.png' alt="" />
                     </div>
                     <form >
